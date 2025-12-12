@@ -23,7 +23,6 @@ public class Enemy : DamagableObject, IBeforeDeathSlave<Enemy>
     {
         onDeath(this);
         base.Die();
-        // ADD score
     }
 
 }

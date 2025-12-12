@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class DamagableObject : MonoBehaviour
 {
-    [SerializeField] float health = 100;
+    [SerializeField] protected float health = 100;
 
     protected abstract void OnTriggerEnter2D(Collider2D collision);
 

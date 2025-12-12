@@ -2,16 +2,17 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst;
+using UnityEditor;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] EnemyWave path;
+    [SerializeField] public EnemyWave path;
 
     [SerializeField] List<Enemy> dormantEnemies;
     [SerializeField] List<Enemy> enemies;
 
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         if (path == null)
             return;
@@ -20,13 +21,11 @@ public class EnemyController : MonoBehaviour
             Gizmos.DrawIcon(
                 path.points[i], 
                 "Triangle.png", 
-                false, 
+                true, 
                 i == 0 ? Color.red 
                     : i == path.points.Count-1 
                         ? Color.blue
                         : Color.white);
-            if(i < path.points.Count-1)
-                Gizmos.DrawLine(path.points[i], path.points[i+1]);
         }
     }
 
@@ -50,10 +49,8 @@ public class EnemyController : MonoBehaviour
 
     void LateUpdate()
     {
-        foreach (Enemy enemy in enemies)
-        {
-            Move(enemy);
-        }
+        for (int i = enemies.Count - 1; i > -1; i--)
+            Move(enemies[i]);
     }
 
     void Move(Enemy enemy)
