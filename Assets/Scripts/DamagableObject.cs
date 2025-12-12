@@ -14,11 +14,11 @@ public abstract class DamagableObject : MonoBehaviour
             Die();
     }
 
-    protected virtual void Die()
+    protected virtual void Die(bool naturalDeath = true)
     {
         Destroy(gameObject);
     }
 
     public void ForceDie()
-        => Die();
+        => Die(false);
 }

@@ -1,3 +1,6 @@
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,6 +12,8 @@ namespace Player
         [SerializeField] int maxHealth;
 
         [SerializeField] TMP_Text m_Text;
+
+
         private void Start()
         {
             health = maxHealth;
@@ -23,8 +28,8 @@ namespace Player
             }
             else if (collision.gameObject.CompareTag("Enemy"))
             {
+                collision.GetComponent<DamagableObject>().ForceDie();
                 Damage(20);
-                collision.gameObject.GetComponent<Enemy>().ForceDie();
             }
         }
 
@@ -34,11 +39,11 @@ namespace Player
             m_Text.text = $"{health}/{maxHealth}";
         }
 
-        protected override void Die()
+        protected override void Die(bool naturalDeath = true)
         {
             base.Die();
-            Debug.LogWarning("you lost");
+            if(naturalDeath)
+                Debug.LogWarning("you lost");
         }
-
     }
 }

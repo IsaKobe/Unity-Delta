@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +19,10 @@ namespace Player.PlayerInput
         [SerializeField] Transform projectileParent;
 
 
+        [SerializeField] List<Collider> shipBody;
+        [SerializeField] Shield shield;
+
+
         InputAction movement;
         InputAction fire;
         InputAction special;
@@ -29,6 +34,9 @@ namespace Player.PlayerInput
         void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
+
+            shipBody = transform.GetChild(0).GetComponentsInChildren<Collider>().ToList();
+            shield = transform.GetChild(0).GetComponent<Shield>();
         }
 
 
@@ -81,9 +89,6 @@ namespace Player.PlayerInput
             };
             return projectile;
         }
-
-
-
 
         void Update()
         {

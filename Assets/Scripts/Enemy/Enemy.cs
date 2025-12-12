@@ -19,10 +19,14 @@ public class Enemy : DamagableObject, IBeforeDeathSlave<Enemy>
 
 
 
-    protected override void Die()
+    protected override void Die(bool naturalDeath = true)
     {
         onDeath(this);
         base.Die();
+        if (naturalDeath)
+        {
+            ScoreManager.AddScore(20);
+        }
     }
 
 }
