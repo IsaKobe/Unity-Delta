@@ -25,6 +25,6 @@ MonoBehaviour:
   - {x: -2.4972777, y: 5.4860377, z: 0}
   - {x: -7.169963, y: 6.986801, z: 0}
   prefab: {fileID: 4805792269409386989, guid: 2f12bc1c7ef9f234e9a26c9496197cda, type: 3}
-  count: 10
+  count: 6
   startDelay: 0
-  delay: 3
+  delay: 1

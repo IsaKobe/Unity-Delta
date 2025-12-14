@@ -1,18 +1,30 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Properties;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 namespace Player
 {
-    public class Player : DamagableObject
+    public class Ship : DamagableObject, IOnEnd<Ship>, IUpdatable
     {
-        [SerializeField] int maxHealth;
+        public void UIUpdate(string property = "")
+        {
+            propertyChanged?.Invoke(this, new(property));
+        }
 
-        [SerializeField] TMP_Text m_Text;
+        [SerializeField] float maxHealth;
 
+        [CreateProperty]
+        public float Health { get => health; set => health = value; }
+
+        public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
+
+        public Action<Ship> onEnd { get; set; }
 
         private void Start()
         {
@@ -36,14 +48,14 @@ namespace Player
         public override void Damage(float damage)
         {
             base.Damage(damage);
-            m_Text.text = $"{health}/{maxHealth}";
+            UIUpdate(nameof(Health));
         }
 
         protected override void Die(bool naturalDeath = true)
         {
+            onEnd(this);
             base.Die();
-            if(naturalDeath)
-                Debug.LogWarning("you lost");
+            Debug.LogWarning("you lost");
         }
     }
 }

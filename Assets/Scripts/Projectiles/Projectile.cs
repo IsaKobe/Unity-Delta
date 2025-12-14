@@ -3,12 +3,12 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public abstract class Projectile : MonoBehaviour, IBeforeDeathSlave<Projectile>
+public abstract class Projectile : MonoBehaviour, IOnEnd<Projectile>
 {
     [SerializeField] float damage;
     [SerializeField] protected Rigidbody2D rb;
     [SerializeField] protected float speed;
-    public Action<Projectile> onDeath { get; set; }
+    public Action<Projectile> onEnd { get; set; }
 
     private void FixedUpdate()
     {
@@ -25,8 +25,8 @@ public abstract class Projectile : MonoBehaviour, IBeforeDeathSlave<Projectile>
 
     public void HandleDelete()
     {
-        if (onDeath != null)
-            onDeath(this);
+        if (onEnd != null)
+            onEnd?.Invoke(this);
         else
             Destroy(gameObject);
     }

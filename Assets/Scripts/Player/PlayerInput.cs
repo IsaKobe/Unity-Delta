@@ -82,7 +82,7 @@ namespace Player.PlayerInput
             Projectile projectile = Instantiate(
                 projectilePrefab, transform.position, Quaternion.identity, projectileParent);
             projectile.gameObject.SetActive(false);
-            projectile.onDeath = (projectile) =>
+            projectile.onEnd = (projectile) =>
             {
                 availableProjectiles.Add(projectile);
                 projectile.gameObject.SetActive(false);

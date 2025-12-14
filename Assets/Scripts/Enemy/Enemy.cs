@@ -1,12 +1,12 @@
 using System;
 using UnityEngine;
 
-public class Enemy : DamagableObject, IBeforeDeathSlave<Enemy>
+public class Enemy : DamagableObject, IOnEnd<Enemy>
 {
     public int waypoint;
     public float Speed;
 
-    public Action<Enemy> onDeath { get; set; }
+    public Action<Enemy> onEnd { get; set; }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -21,7 +21,7 @@ public class Enemy : DamagableObject, IBeforeDeathSlave<Enemy>
 
     protected override void Die(bool naturalDeath = true)
     {
-        onDeath(this);
+        onEnd(this);
         base.Die();
         if (naturalDeath)
         {

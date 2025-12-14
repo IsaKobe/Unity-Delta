@@ -1,16 +1,21 @@
 using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst;
 using UnityEditor;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IOnEnd<EnemyController>
 {
     [SerializeField] public EnemyWave path;
 
     [SerializeField] List<Enemy> dormantEnemies;
     [SerializeField] List<Enemy> enemies;
+
+    bool spawnedAll;
+
+    public Action<EnemyController> onEnd { get; set; }
 
     void OnDrawGizmosSelected()
     {
@@ -32,25 +37,39 @@ public class EnemyController : MonoBehaviour
     IEnumerator Start()
     {
         dormantEnemies = new();
+        yield return new WaitForSeconds(path.startDelay);
         for (int i = 0; i < path.count; i++)
             dormantEnemies.Add(Instantiate(path.prefab, path.points[0], Quaternion.identity, transform));
-        yield return new WaitForSeconds(path.delay);
+        
 
         enemies = new();
+        spawnedAll = false;
         while (dormantEnemies.Count > 0)
         {
             Enemy enemy = dormantEnemies[0];
             enemies.Add(enemy);
-            enemy.onDeath = (en) => enemies.Remove(en);
+            enemy.onEnd = (en) => enemies.Remove(en);
             dormantEnemies.RemoveAt(0);
             yield return new WaitForSeconds(path.delay);
         }
+        spawnedAll = true;
     }
 
     void LateUpdate()
     {
         for (int i = enemies.Count - 1; i > -1; i--)
             Move(enemies[i]);
+        if (spawnedAll && enemies.Count == 0) 
+        {
+            onEnd?.Invoke(this);
+            Stop();
+        }
+    }
+
+    public void Stop()
+    {
+        StopAllCoroutines();
+        enabled = false;
     }
 
     void Move(Enemy enemy)

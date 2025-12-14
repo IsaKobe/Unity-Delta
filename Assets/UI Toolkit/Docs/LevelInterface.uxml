@@ -1,0 +1,10 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Styles/BaseStyle.uss?fileID=7433441132597879392&amp;guid=823c72c9876cbe248804b955551c1c54&amp;type=3#BaseStyle"/>
+    <ui:VisualElement name="" style="flex-grow: 1; position: absolute; width: 150px; flex-direction: row; height: 60px; padding-left: 10px; padding-top: 10px;">
+        <ui:Label text="100" name="Health" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; flex-grow: 1; -unity-text-generator: advanced; font-size: 39px; -unity-text-align: middle-center;"/>
+        <ui:Image style="aspect-ratio: 1; background-image: url(&quot;project://database/Assets/Icons/hearts.png?fileID=2800000&amp;guid=9910021af1a32ab4e89577e624d40172&amp;type=3#hearts&quot;); -unity-background-image-tint-color: rgb(255, 0, 0); min-height: 100%;"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="" style="align-self: center;">
+        <ui:Label text="Score" name="Score" style="-unity-text-align: middle-center; font-size: 40px;"/>
+    </ui:VisualElement>
+</ui:UXML>

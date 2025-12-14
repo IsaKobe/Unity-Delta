@@ -1,0 +1,4 @@
+:root {
+    --my-text-color: rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
+}
