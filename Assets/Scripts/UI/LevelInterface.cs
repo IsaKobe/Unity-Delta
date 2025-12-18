@@ -5,19 +5,16 @@ using UnityEngine.UIElements;
 
 public class LevelInterface : MonoBehaviour
 {
-    [SerializeField] WorldController controller;
     UIDocument document;
 
     private void Start()
     {
-        ScoreManager manager = controller.ScoreManager;
-        Ship ship = controller.Player;
         document = GetComponent<UIDocument>();
 
         Label label = document.rootVisualElement.Q<Label>("Health");
-        label.SetBinding(nameof(Ship.Health), nameof(Label.text), (ref float h) => h.ToString(), ship);
+        label.SetBinding(nameof(Ship.Health), nameof(Label.text), (ref float h) => h.ToString(), WorldController.Ship);
 
         label = document.rootVisualElement.Q<Label>("Score");
-        label.SetBinding(nameof(ScoreManager.Score), nameof(Label.text), (ref int s) => s.ToString(), manager);
+        label.SetBinding(nameof(ScoreManager.Score), nameof(Label.text), (ref int s) => s.ToString(), WorldController.ScoreManager);
     }
 }

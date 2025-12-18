@@ -5,8 +5,9 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerProjectile : Projectile
+    public class SimpleProjectile : Projectile
     {
+        //public float Speed { get => speed; set => speed = value; }
         public override void Move()
         {
             Vector3 newPos = new(transform.position.x, transform.position.y + speed, transform.position.z);

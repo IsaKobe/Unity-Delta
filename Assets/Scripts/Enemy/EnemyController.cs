@@ -34,12 +34,17 @@ public class EnemyController : MonoBehaviour, IOnEnd<EnemyController>
         }
     }
 
+    void Awake()
+    {
+        enabled = false;
+    }
+
     IEnumerator Start()
     {
         dormantEnemies = new();
         yield return new WaitForSeconds(path.startDelay);
         for (int i = 0; i < path.count; i++)
-            dormantEnemies.Add(Instantiate(path.prefab, path.points[0], Quaternion.identity, transform));
+            dormantEnemies.Add(Instantiate(path.prefab, path.points[0], Quaternion.Euler(180,0,0), transform));
         
 
         enemies = new();

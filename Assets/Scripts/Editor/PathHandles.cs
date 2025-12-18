@@ -41,6 +41,7 @@ public class PathHandles : Editor
                 if (EditorGUI.EndChangeCheck())
                 {
                     Undo.RecordObject(temp, "Move Point");
+                    pos.z = 0;
                     temp.path.points[i] = pos;
                     EditorUtility.SetDirty(temp.path);
                 }

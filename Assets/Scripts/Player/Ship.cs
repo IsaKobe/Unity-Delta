@@ -26,6 +26,8 @@ namespace Player
 
         public Action<Ship> onEnd { get; set; }
 
+        GameObject lastCollision;
+
         private void Start()
         {
             health = maxHealth;
@@ -33,16 +35,23 @@ namespace Player
 
         protected override void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision == null) return;
+            if (collision == null && collision.gameObject == lastCollision) return;
             if (collision.gameObject.CompareTag("EnemyProjectile"))
             {
-                Damage(20);
+                Damage(collision.GetComponent<Projectile>().GetDamage());
             }
             else if (collision.gameObject.CompareTag("Enemy"))
             {
-                collision.GetComponent<DamagableObject>().ForceDie();
+                Enemy enemy = collision.GetComponent<Enemy>();
+                enemy.ForceDie();
                 Damage(20);
             }
+            lastCollision = collision.gameObject;
+        }
+
+        private void FixedUpdate()
+        {
+            lastCollision = null;
         }
 
         public override void Damage(float damage)

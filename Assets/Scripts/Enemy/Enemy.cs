@@ -5,7 +5,7 @@ public class Enemy : DamagableObject, IOnEnd<Enemy>
 {
     public int waypoint;
     public float Speed;
-
+    
     public Action<Enemy> onEnd { get; set; }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

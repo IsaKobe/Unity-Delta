@@ -16,6 +16,7 @@ public abstract class DamagableObject : MonoBehaviour
 
     protected virtual void Die(bool naturalDeath = true)
     {
+        StopAllCoroutines();
         Destroy(gameObject);
     }
 
