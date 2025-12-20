@@ -13,7 +13,9 @@ public class PlayerSpawner : MonoBehaviour
 
     [SerializeField] InputAction joinAction;
 
+#pragma warning disable UDR0001 // Domain Reload Analyzer
     static List<InputDevice> devices;
+#pragma warning restore UDR0001 // Domain Reload Analyzer
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

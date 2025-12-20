@@ -1,38 +1,88 @@
-﻿using Player;
+﻿using Projectiles.Controllers.Data;
+using Player;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
+using System.Linq;
+using NUnit.Framework;
+using System.Collections.Generic;
 
-internal class Rocket : Projectile
+namespace Projectiles
 {
-    [SerializeField] float rotSpeed;
-    [SerializeField] float projectileLife = 10;
-    [SerializeField] Transform target;
-
-    private void Awake()
+    public class Rocket : Projectile
     {
-        target = WorldController.Ship.transform;
-        StartCoroutine(TimeOut());
-    }
+        [SerializeField] float rotSpeed;
+        [SerializeField] float projectileLife = 10;
+        [SerializeField] Transform target;
 
-    IEnumerator TimeOut()
-    {
-        yield return new WaitForSeconds(projectileLife);
-        HandleDelete();
-    }
+        IEnumerator TimeOut()
+        {
+            yield return new WaitForSeconds(projectileLife);
+            HandleDelete();
+        }
 
-    public override void Move()
-    {
-        Vector3 newPos = transform.position + (transform.up * speed);
+        public override void Move()
+        {
+            Vector3 newPos = transform.position + (transform.up * speed);
 
-        Vector3 diff = target.position - transform.position;
-        diff.Normalize();
-        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg - 90;
-        //float currentRot = transform.rotation.eulerAngles.z - 90;
-        //rot_z = Mathf.Clamp(rot_z, currentRot - rotSpeed, currentRot + rotSpeed);//(0, rot_z, rotSpeed);
+            float newRot = transform.rotation.eulerAngles.z;
+            if (target)
+            {
+                Vector3 diff = target.position - transform.position;
+                float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg - 90;
+                newRot = Mathf.MoveTowardsAngle(newRot, rot_z, rotSpeed);
+            }
+            else
+            {
+                FindTarget();
+                if (target)
+                {
+                    Move();
+                    return;
+                }
+            }
 
-        rb.MovePositionAndRotation(newPos, Quaternion.Euler(0,0, rot_z));
+            rb.MovePositionAndRotation(newPos, Quaternion.Euler(0, 0, newRot));
+        }
+
+        public override void SetStats(ProjData data)
+        {
+            base.SetStats(data);
+            projectileLife = (data as RocketProjData).timeToLive;
+            rotSpeed = (data as RocketProjData).rotSpeed;
+
+            if(!data.isPlayerProj)
+                target = WorldController.Ship.transform;
+            else
+            {
+                FindTarget();
+            }
+        }
+
+        void FindTarget()
+        {
+            List<Transform> targets = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Select(q => q.transform).ToList();
+            targets.AddRange(FindObjectsByType<Turret>(FindObjectsSortMode.None).Select(q => q.transform));
+
+            float min = float.MaxValue;
+            int minI = -1;
+            for (int i = 0; i < targets.Count; i++)
+            {
+                float dis = Vector2.Distance(targets[i].position, transform.position);
+                if (dis < min)
+                {
+                    min = dis;
+                    minI = i;
+                }
+            }
+            if(minI > -1)
+                target = targets[minI];
+        }
+
+        private void OnEnable()
+        {
+            StartCoroutine(TimeOut());
+        }
+
     }
 }

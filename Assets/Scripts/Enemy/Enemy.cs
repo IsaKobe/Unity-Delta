@@ -1,3 +1,4 @@
+using Projectiles;
 using System;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ public class Enemy : DamagableObject, IOnEnd<Enemy>
         base.Die();
         if (naturalDeath)
         {
-            ScoreManager.AddScore(20);
+            WorldController.AddScore(20);
         }
     }
 

@@ -6,7 +6,7 @@ using Unity.Burst;
 using UnityEditor;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour, IOnEnd<EnemyController>
+public class EnemyController : MonoBehaviour, IOnEnd<EnemyController>, IPausable
 {
     [SerializeField] public EnemyWave path;
 
@@ -90,5 +90,15 @@ public class EnemyController : MonoBehaviour, IOnEnd<EnemyController>
             if (enemy.waypoint == path.points.Count)
                 enemy.ForceDie();
         }
+    }
+
+    public void OnPause()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void OnResume()
+    {
+        gameObject.SetActive(true);
     }
 }

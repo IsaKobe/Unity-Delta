@@ -8,6 +8,7 @@ TagManager:
   - PlayerProjectile
   - EnemyProjectile
   - Turret
+  - ProjectilePoolTrans
   layers:
   - Default
   - TransparentFX

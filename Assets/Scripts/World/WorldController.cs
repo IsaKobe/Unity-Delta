@@ -1,24 +1,40 @@
 using Player;
+using System;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
+using static UnityEditor.Progress;
 public class WorldController : MonoBehaviour
 {
+    [Header("Player")]
     [SerializeField] Ship playerShip;
-    EnemyController[] controllers;
-    [SerializeField] Transform enemyControllers;
     [SerializeField] ScoreManager scoreManager;
 
+    [Header("Controllers")]
+    [SerializeField] Transform enemyControllers;
+    [SerializeField] Transform turretControllers;
+
+    EnemyController[] enemies;
+    Turret[] turrets;
+
+    [Header("UI")]
     [SerializeField] EndScreen screen;
-
+    [SerializeField] MapMovement mapMovement;
     [SerializeField] bool spawn;
-    int progress;
-
+    [SerializeField] int progress;
     [SerializeField] int progressEnd;
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0001:Domain Reload Analyzer", Justification = "<fixed in awake>")]
     static WorldController instance;
 
     public static Ship Ship => instance.playerShip;
     public static ScoreManager ScoreManager => instance.scoreManager;
+
+    Action onPause;
+    Action onResume;
+
+
 
     private void Awake()
     {
@@ -31,59 +47,73 @@ public class WorldController : MonoBehaviour
     {
         
         playerShip.onEnd = LoseGame;
-        if (progressEnd > 0)
-            StartCoroutine(EndGame());
 
+        progressEnd = 0;
+        enemies = enemyControllers.GetComponentsInChildren<EnemyController>();
+        if (spawn) 
+        {
+            foreach (var item in enemies)
+            {
+                ((IPausable)item).Attach(ref onPause, ref onResume);
+                item.onEnd += Progress;
+                item.enabled = true;
+                progressEnd++;
+            }
+        
+        }
+
+        turrets = turretControllers.GetComponentsInChildren<Turret>();
+        foreach(var item in turrets)
+        {
+            ((IPausable)item).Attach(ref onPause, ref onResume);
+            item.onEnd += Progress;
+            progressEnd++;
+        }
+
+        ((IPausable)mapMovement).Attach(ref onPause, ref onResume);
         Time.timeScale = 1;
-        if (spawn == false) 
-        {
-            controllers = new EnemyController[0];
-            return;
-        }
-        controllers = enemyControllers.GetComponentsInChildren<EnemyController>();
-        foreach (var item in controllers)
-        {
-            //item.onEnd += Progress;
-            item.enabled = true;
-        }
-
-        //progress = 0;
-    }
-
-    IEnumerator EndGame()
-    {
-        yield return new WaitForSeconds(progressEnd);
-        WinGame();
     }
 
     void LoseGame(Ship ship)
     {
-        StopGame();
+        EndGame();
         screen.Lose(scoreManager);
     }
-    /*void Progress(EnemyController controller)
+
+    void Progress(object controller)
     {
         progress++;
-        if(progress == controllers.Length)
+        if(progressEnd == progress)
         {
-            WinGame();
+            EndGame();
+            screen.Win(scoreManager);
         }
-    }*/
-
-    void WinGame()
-    {
-        StopGame();
-        screen.Win(scoreManager);
-        
     }
 
-    void StopGame()
+    void EndGame()
     {
         StopAllCoroutines();
-        Time.timeScale = 0;
-        foreach (var item in controllers)
+        foreach (var item in enemies)
         {
             item.Stop();
         }
+        foreach (var turret in turrets)
+        {
+            turret.Deactivate();
+        }
     }
+
+    public static void ToggleGame(bool pause)
+    {
+        if (pause)
+            instance.onPause?.Invoke();
+        else
+            instance.onResume?.Invoke();
+    }
+
+    public static void AddScore(int score)
+    {
+        instance.scoreManager.AddScore(score);
+    }
+
 }

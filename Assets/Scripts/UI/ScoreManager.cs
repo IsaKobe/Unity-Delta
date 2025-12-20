@@ -9,8 +9,6 @@ public class ScoreManager : MonoBehaviour, IUpdatable
     {
         propertyChanged?.Invoke(this, new(property));
     }
-
-    static ScoreManager instance;
     int score;
     [CreateProperty]
     public int Score { get => score; set => score = value; }
@@ -20,16 +18,9 @@ public class ScoreManager : MonoBehaviour, IUpdatable
     private void Awake()
     {
         score = 0;
-        instance = this;
-        
     }
 
-    public static void AddScore(int ammount)
-    {
-        instance.ManageScore(ammount);
-    }
-
-    void ManageScore(int ammount)
+    public void AddScore(int ammount)
     {
         score += ammount;
         UIUpdate(nameof(Score));

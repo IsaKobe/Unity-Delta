@@ -1,3 +1,4 @@
+using Projectiles;
 using System.Collections;
 using UnityEngine;
 
@@ -26,12 +27,14 @@ public class Trash : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerProjectile") ||
             collision.gameObject.CompareTag("EnemyProjectile"))
         {
+            if (collision.TryGetComponent<Rocket>(out _))
+                return;
             collision.GetComponent<Projectile>().HandleDelete();
         }
         else if (collision.gameObject.CompareTag("Turret"))
         {
             if (!enableObjects)
-                Destroy(collision.gameObject);
+                collision.gameObject.GetComponent<Turret>().ForceDie();
         }
 
     }

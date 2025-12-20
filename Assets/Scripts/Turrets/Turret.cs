@@ -1,11 +1,16 @@
+using Projectiles;
 using System;
 using System.Collections;
 using UnityEngine;
 
-public abstract class Turret : DamagableObject
+public abstract class Turret : DamagableObject, IOnEnd<Turret>, IPausable
 {
     [SerializeField] int cooldown;
     [SerializeField] protected bool activated = false;
+
+    public Action<Turret> onEnd { get; set; }
+
+    protected abstract void Awake();
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -44,4 +49,23 @@ public abstract class Turret : DamagableObject
     }
 
     protected abstract void OnShoot();
+
+
+
+    protected override void Die(bool naturalDeath = true)
+    {
+        Deactivate();
+        onEnd(this);
+        base.Die(naturalDeath);
+    }
+
+    public void OnPause()
+    {
+        enabled = false;
+    }
+
+    public void OnResume()
+    {
+        enabled = true;
+    }
 }

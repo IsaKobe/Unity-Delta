@@ -1,33 +1,59 @@
+using Projectiles.Controllers.Data;
 using NUnit.Framework;
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public abstract class Projectile : MonoBehaviour, IOnEnd<Projectile>
+namespace Projectiles
 {
-    [SerializeField] float damage;
-    [SerializeField] protected Rigidbody2D rb;
-    [SerializeField] protected float speed;
-    public Action<Projectile> onEnd { get; set; }
-
-    private void FixedUpdate()
+    [RequireComponent(typeof(Rigidbody2D))]
+    public abstract class Projectile : MonoBehaviour, IOnEnd<Projectile>
     {
-        Move();
-    }
+        [SerializeField] float damage;
+        [SerializeField] protected float speed;
+        
+        protected Rigidbody2D rb;
+        public Action<Projectile> onEnd { get; set; }
+        protected virtual void Awake()
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
 
-    public abstract void Move();
+        private void FixedUpdate()
+        {
+            Move();
+        }
 
-    public float GetDamage()
-    {
-        HandleDelete();
-        return damage;
-    }
+        public abstract void Move();
 
-    public void HandleDelete()
-    {
-        if (onEnd != null)
-            onEnd?.Invoke(this);
-        else
-            Destroy(gameObject);
+        public float GetDamage()
+        {
+            HandleDelete();
+            return damage;
+        }
+
+        public void HandleDelete()
+        {
+            StopAllCoroutines();
+            rb.linearVelocityX = 0;
+            rb.linearVelocityY = 0;
+            if (onEnd != null)
+                onEnd?.Invoke(this);
+            else
+                Destroy(gameObject);
+        }
+
+        public virtual void SetStats(ProjData data)
+        {
+            damage = data.damage;
+            speed = data.speed;
+            if (data.isPlayerProj)
+                gameObject.tag = "PlayerProjectile";
+            else
+                gameObject.tag = "EnemyProjectile";
+
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = data.sprite;
+            spriteRenderer.color = data.color;
+        }
     }
 }

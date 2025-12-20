@@ -1,16 +1,19 @@
 using Player;
+using Projectiles;
+using Projectiles.Controllers;
+using Projectiles.Controllers.Data;
 using UnityEngine;
 
 public class SimpleTurret : Turret
 {
-    [SerializeField] SimpleProjectile projectile;
+    [SerializeField] SimpleProjData data;
     protected override void OnShoot()
     {
-        SimpleProjectile simpleProjectile = Instantiate(projectile, transform.position, Quaternion.identity, transform.parent.parent.GetChild(2));
-        //simpleProjectile.Speed *= -1;
+        SimpleProjectile simpleProjectile = SProjController.GetProjectile(data, transform);
     }
-    private void Awake()
+    protected override void Awake()
     {
+        data = Instantiate(data);
         Activate();
     }
 }

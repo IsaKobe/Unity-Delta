@@ -1,20 +1,24 @@
-﻿using System;
+﻿using Projectiles.Controllers.Data;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-class VectorProjectile : Projectile
+namespace Projectiles
 {
-    Vector3 direction;
-    public override void Move()
+    public class VectorProjectile : Projectile
     {
-        Vector3 newPos = transform.position + (direction * speed);
-        rb.MovePosition(newPos);
-    }
+        Vector3 direction;
+        public override void Move()
+        {
+            Vector3 newPos = transform.position + (direction * speed);
+            rb.MovePosition(newPos);
+        }
 
-    public void SetVector(Vector2 vec)
-    {
-        direction = vec.normalized;
-        enabled = true;
+        public override void SetStats(ProjData data)
+        {
+            base.SetStats(data);
+            direction = (data as VecProjData).initialVector;
+        }
     }
 }

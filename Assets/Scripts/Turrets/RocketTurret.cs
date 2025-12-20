@@ -1,13 +1,20 @@
+using Projectiles.Controllers.Data;
+using Projectiles.Controllers;
 using UnityEngine;
 
 public class RocketTurret : Turret
 {
-    [SerializeField] Rocket rocket;
+    [SerializeField] RocketProjData rocketData;
 
     [SerializeField] Transform projectileTrans;
 
     protected override void OnShoot()
     {
-        Rocket simpleProjectile = Instantiate(rocket, transform.position, Quaternion.identity, projectileTrans);
+        RProjController.GetProjectile(rocketData, transform);
+    }
+
+    protected override void Awake()
+    {
+        //rocketData = Instantiate(rocketData);
     }
 }

@@ -1,17 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Projectiles.Controllers.Data;
 using UnityEngine;
 
-namespace Player
+namespace Projectiles
 {
+    [RequireComponent(typeof(SpriteRenderer))]
     public class SimpleProjectile : Projectile
     {
-        //public float Speed { get => speed; set => speed = value; }
         public override void Move()
         {
             Vector3 newPos = new(transform.position.x, transform.position.y + speed, transform.position.z);
             rb.MovePosition(newPos);
+        }
+
+        public override void SetStats(ProjData data)
+        {
+            base.SetStats(data);
         }
     }
 }

@@ -1,14 +1,24 @@
-using Player;
+using Projectiles;
+using Projectiles.Controllers;
+using Projectiles.Controllers.Data;
 using System.Collections;
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 
 public class AdvancedTurret : Turret
 {
     [SerializeField] int initCooldown = 2;
-    [SerializeField] VectorProjectile projectile;
     [SerializeField] float rotSpeed = 1;
 
+    [SerializeField] VecProjData projData;
+
     Vector3 direction;
+
+    protected override void Awake()
+    {
+        projData = Instantiate(projData);
+    }
+
     private void Update()
     {
         if (!activated)
@@ -33,12 +43,8 @@ public class AdvancedTurret : Turret
 
     protected override void OnShoot()
     {
-        VectorProjectile proj = 
-            Instantiate(
-                projectile, 
-                transform.position, 
-                Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z), 
-                transform.parent.parent.GetChild(2));
-        proj.SetVector(transform.up);
+        projData.initialVector = transform.up;
+
+        VProjController.GetProjectile(projData, transform);
     }
 }
