@@ -1,3 +1,29 @@
+.test:disabled:hover {
+    -unity-material: none;
+}
+
+.test:hover {
+    -unity-material: url("project://database/Assets/Shader/Test.mat?fileID=2100000&guid=925be8477f1b75d4db8da4ef266796cc&type=2#Test") prop("_Speed" 0.2);
+}
+
+.test {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    max-width: 100px;
+    min-width: 100px;
+    background-color: rgb(0, 0, 157);
+    border-left-color: rgb(115, 115, 115);
+    border-right-color: rgb(115, 115, 115);
+    border-top-color: rgb(115, 115, 115);
+    border-bottom-color: rgb(115, 115, 115);
+}
+
 :root {
     --my-text-color: rgb(255, 255, 255);
     color: rgb(255, 255, 255);

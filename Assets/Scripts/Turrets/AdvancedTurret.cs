@@ -4,6 +4,7 @@ using Projectiles.Controllers.Data;
 using System.Collections;
 using Unity.Android.Gradle.Manifest;
 using UnityEngine;
+using World;
 
 public class AdvancedTurret : Turret
 {
@@ -36,7 +37,7 @@ public class AdvancedTurret : Turret
 
     IEnumerator BeforeActivation()
     {
-        yield return new WaitForSeconds(initCooldown);
+        yield return new PauseWaitUntil(initCooldown);
         StartCoroutine(ShootLoop());
     }
 

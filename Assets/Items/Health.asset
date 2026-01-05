@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e2ccd0c5d5b964b956dca7e8590562, type: 3}
+  m_Name: Health
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  image: {fileID: 2800000, guid: 9910021af1a32ab4e89577e624d40172, type: 3}
+  Name: Health
+  paragraph: Increases health of the ship.
+  maxLevel: 5
+  costs: 0a000000140000001e0000002800000032000000
+  data: 0a000000140000001e0000002800000032000000

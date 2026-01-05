@@ -2,11 +2,13 @@ using Projectiles;
 using System;
 using System.Collections;
 using UnityEngine;
+using World;
 
 public abstract class Turret : DamagableObject, IOnEnd<Turret>, IPausable
 {
     [SerializeField] int cooldown;
     [SerializeField] protected bool activated = false;
+    [SerializeField] int score;
 
     public Action<Turret> onEnd { get; set; }
 
@@ -43,7 +45,7 @@ public abstract class Turret : DamagableObject, IOnEnd<Turret>, IPausable
     {
         while (true)
         {
-            yield return new WaitForSeconds(cooldown);
+            yield return new PauseWaitUntil(cooldown);
             OnShoot();
         }
     }
@@ -55,6 +57,10 @@ public abstract class Turret : DamagableObject, IOnEnd<Turret>, IPausable
     protected override void Die(bool naturalDeath = true)
     {
         Deactivate();
+        if (naturalDeath)
+        {
+            WorldController.AddScore(score);
+        }
         onEnd(this);
         base.Die(naturalDeath);
     }

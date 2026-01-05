@@ -1,11 +1,13 @@
 using Projectiles;
 using System;
 using UnityEngine;
+using World;
 
 public class Enemy : DamagableObject, IOnEnd<Enemy>
 {
     public int waypoint;
     public float Speed;
+    [SerializeField] int score;
     
     public Action<Enemy> onEnd { get; set; }
 
@@ -22,12 +24,12 @@ public class Enemy : DamagableObject, IOnEnd<Enemy>
 
     protected override void Die(bool naturalDeath = true)
     {
-        onEnd(this);
-        base.Die();
         if (naturalDeath)
         {
-            WorldController.AddScore(20);
+            WorldController.AddScore(score);
         }
+        onEnd(this);
+        base.Die();
     }
 
 }

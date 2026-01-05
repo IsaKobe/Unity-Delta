@@ -1,119 +1,116 @@
 using Player;
-using System;
-using System.Collections;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
-using static UnityEditor.Progress;
-public class WorldController : MonoBehaviour
+
+namespace World
 {
-    [Header("Player")]
-    [SerializeField] Ship playerShip;
-    [SerializeField] ScoreManager scoreManager;
-
-    [Header("Controllers")]
-    [SerializeField] Transform enemyControllers;
-    [SerializeField] Transform turretControllers;
-
-    EnemyController[] enemies;
-    Turret[] turrets;
-
-    [Header("UI")]
-    [SerializeField] EndScreen screen;
-    [SerializeField] MapMovement mapMovement;
-    [SerializeField] bool spawn;
-    [SerializeField] int progress;
-    [SerializeField] int progressEnd;
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0001:Domain Reload Analyzer", Justification = "<fixed in awake>")]
-    static WorldController instance;
-
-    public static Ship Ship => instance.playerShip;
-    public static ScoreManager ScoreManager => instance.scoreManager;
-
-    Action onPause;
-    Action onResume;
-
-
-
-    private void Awake()
+    public class WorldController : MonoBehaviour
     {
-        instance = this;
-    }
+        [Header("Player")]
+        [SerializeField] Ship playerShip;
+        [SerializeField] ScoreManager scoreManager;
+
+        [Header("Controllers")]
+        [SerializeField] Transform enemyControllers;
+        [SerializeField] Transform turretControllers;
+        [SerializeField] TimeController timeController;
+
+        EnemyController[] enemies;
+        Turret[] turrets;
+
+        [Header("UI")]
+        [SerializeField] EndScreen screen;
+        [SerializeField] MapMovement mapMovement;
+        [SerializeField] bool spawn;
+        [SerializeField] int progress;
+        [SerializeField] int progressEnd;
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0001:Domain Reload Analyzer", Justification = "<fixed in awake>")]
+        static WorldController instance;
+
+        public static Ship Ship => instance.playerShip;
+        public static ScoreManager ScoreManager => instance.scoreManager;
+        public static TimeController TimeController => instance.timeController;
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-        playerShip.onEnd = LoseGame;
-
-        progressEnd = 0;
-        enemies = enemyControllers.GetComponentsInChildren<EnemyController>();
-        if (spawn) 
+        private void Awake()
         {
-            foreach (var item in enemies)
+            instance = this;
+        }
+
+
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
+        {
+            playerShip.onEnd = LoseGame;
+
+            progressEnd = 0;
+            enemies = enemyControllers.GetComponentsInChildren<EnemyController>();
+            if (spawn)
             {
-                ((IPausable)item).Attach(ref onPause, ref onResume);
+                foreach (var item in enemies)
+                {
+                    ((IPausable)item).Attach(timeController);
+                    item.onEnd += Progress;
+                    item.enabled = true;
+                    progressEnd++;
+                }
+
+            }
+
+            turrets = turretControllers.GetComponentsInChildren<Turret>();
+            foreach (var item in turrets)
+            {
+                ((IPausable)item).Attach(timeController);
                 item.onEnd += Progress;
-                item.enabled = true;
                 progressEnd++;
             }
-        
+
+            ((IPausable)mapMovement).Attach(timeController);
+            ((IPausable)playerShip.Input).Attach(timeController);
+            timeController.StartTimer();
         }
 
-        turrets = turretControllers.GetComponentsInChildren<Turret>();
-        foreach(var item in turrets)
-        {
-            ((IPausable)item).Attach(ref onPause, ref onResume);
-            item.onEnd += Progress;
-            progressEnd++;
-        }
-
-        ((IPausable)mapMovement).Attach(ref onPause, ref onResume);
-        Time.timeScale = 1;
-    }
-
-    void LoseGame(Ship ship)
-    {
-        EndGame();
-        screen.Lose(scoreManager);
-    }
-
-    void Progress(object controller)
-    {
-        progress++;
-        if(progressEnd == progress)
+        void LoseGame(Ship ship)
         {
             EndGame();
-            screen.Win(scoreManager);
+            screen.Lose(scoreManager);
         }
-    }
 
-    void EndGame()
-    {
-        StopAllCoroutines();
-        foreach (var item in enemies)
+        void Progress(object controller)
         {
-            item.Stop();
+            progress++;
+            if (progressEnd == progress)
+            {
+                EndGame();
+                screen.Win(scoreManager);
+            }
         }
-        foreach (var turret in turrets)
+
+        void EndGame()
         {
-            turret.Deactivate();
+            StopAllCoroutines();
+            foreach (var item in enemies)
+            {
+                item.Stop();
+            }
+            foreach (var turret in turrets)
+            {
+                turret.Deactivate();
+            }
         }
-    }
 
-    public static void ToggleGame(bool pause)
-    {
-        if (pause)
-            instance.onPause?.Invoke();
-        else
-            instance.onResume?.Invoke();
-    }
+        public static void ToggleGame(bool pause)
+        {
+            if (pause)
+                instance.timeController.StopTimer();
+            else
+                instance.timeController.ResumeTimer();
+        }
 
-    public static void AddScore(int score)
-    {
-        instance.scoreManager.AddScore(score);
-    }
+        public static void AddScore(int score)
+        {
+            instance.scoreManager.AddScore(score);
+        }
 
+    }
 }

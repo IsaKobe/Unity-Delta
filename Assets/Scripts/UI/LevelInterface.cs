@@ -2,6 +2,7 @@ using Player;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
+using World;
 
 public class LevelInterface : MonoBehaviour
 {

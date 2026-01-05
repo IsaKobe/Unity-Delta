@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Linq;
 using NUnit.Framework;
 using System.Collections.Generic;
+using World;
 
 namespace Projectiles
 {
@@ -17,7 +18,7 @@ namespace Projectiles
 
         IEnumerator TimeOut()
         {
-            yield return new WaitForSeconds(projectileLife);
+            yield return new PauseWaitUntil(projectileLife);
             HandleDelete();
         }
 

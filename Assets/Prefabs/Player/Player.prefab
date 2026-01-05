@@ -87,7 +87,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 86c330e673bfa3549a531fbd8cea1e8d, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.19104338, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   health: 20
   maxHealth: 100
-  m_Text: {fileID: 0}
+  Input: {fileID: 606553175847959984}
 --- !u!114 &606553175847959984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,12 +152,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   asset: {fileID: -944628639613478452, guid: 851c4a9fac2dcf94a87050fd908f18b0, type: 3}
   speed: 0.2
-  projectilePrefab: {fileID: 1642633470860352267, guid: c9043e0b967be264e8a311971b5fe94f, type: 3}
-  availableProjectiles: []
-  projectileCount: 1
-  projectileParent: {fileID: 0}
   shipBody: []
   shield: {fileID: 0}
+  projData: {fileID: 11400000, guid: ffb2e05bda0364e46a2744375c86d477, type: 2}
+  rocketData: {fileID: 11400000, guid: 48690b6869d51da49acef898b46833bc, type: 2}
 --- !u!1 &1910067007420667112
 GameObject:
   m_ObjectHideFlags: 0

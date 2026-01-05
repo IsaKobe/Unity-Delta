@@ -144,3 +144,4 @@ MonoBehaviour:
   health: 20
   waypoint: 0
   Speed: 3
+  score: 20

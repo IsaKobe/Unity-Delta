@@ -1,0 +1,17 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Styles/Shop.uss?fileID=7433441132597879392&amp;guid=609ba81dc93a32141970459781b8e159&amp;type=3#Shop"/>
+    <Style src="project://database/Assets/UI%20Toolkit/Styles/MainMenu.uss?fileID=7433441132597879392&amp;guid=37dd546e1b6105b4096a6ab9d89e2373&amp;type=3#MainMenu"/>
+    <Style src="project://database/Assets/UI%20Toolkit/Styles/BaseStyle.uss?fileID=7433441132597879392&amp;guid=823c72c9876cbe248804b955551c1c54&amp;type=3#BaseStyle"/>
+    <ui:VisualElement style="flex-grow: 1; background-color: rgb(0, 0, 0); flex-direction: row; font-size: 40px;">
+        <ui:VisualElement name="VisualElement" class="menu">
+            <ui:Label text="Items" name="Title" style="font-size: 40px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;"/>
+            <ui:ListView name="Items" fixed-item-height="60" style="background-color: rgba(180, 180, 180, 0.68); margin-top: 10px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 0; border-left-width: 2px;"/>
+            <ui:Button text="Back" name="Back" class="back test" style="font-size: 20px;"/>
+        </ui:VisualElement>
+        <ShopInfo/>
+    </ui:VisualElement>
+    <ui:VisualElement name="Money" style="flex-grow: 1; align-self: center; position: absolute; top: 10px; flex-direction: row; justify-content: space-between; font-size: 25px;">
+        <ui:Label text="Money:" name="Money-Title" style="align-self: flex-end;"/>
+        <ui:Label text="####" name="Money-Label"/>
+    </ui:VisualElement>
+</ui:UXML>

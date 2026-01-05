@@ -4,10 +4,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using World;
+using Unity.Burst;
 
 namespace Projectiles.Controllers
 {
-    public abstract class ProjectileController<T> : MonoBehaviour where T : Projectile
+    public abstract class ProjectileController<T> : MonoBehaviour, IPausable where T : Projectile
     {
         Transform poolTransform;
 
@@ -31,6 +33,8 @@ namespace Projectiles.Controllers
 
             pool = new();
             activeProjectiles = new();
+
+            ((IPausable)this).Attach(WorldController.TimeController);
         }
 
         public static T GetProjectile(ProjData data, Transform transform, bool enable = true)
@@ -90,6 +94,22 @@ namespace Projectiles.Controllers
 #if UNITY_EDITOR
             activeProjectiles.Remove(proj as T);
 #endif
+        }
+
+        public void OnPause()
+        {
+            foreach (var item in activeProjectiles)
+            {
+                item.GetComponent<Rigidbody2D>().simulated = false;
+            }
+        }
+
+        public void OnResume()
+        {
+            foreach (var item in activeProjectiles)
+            {
+                item.GetComponent<Rigidbody2D>().simulated = true;
+            }
         }
     }
 }

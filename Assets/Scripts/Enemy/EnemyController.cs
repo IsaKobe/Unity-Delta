@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using Unity.Burst;
 using UnityEditor;
 using UnityEngine;
+using World;
 
 public class EnemyController : MonoBehaviour, IOnEnd<EnemyController>, IPausable
 {
-    [SerializeField] public EnemyWave path;
+    public EnemyWave path;
 
     [SerializeField] List<Enemy> dormantEnemies;
     [SerializeField] List<Enemy> enemies;
@@ -42,7 +43,7 @@ public class EnemyController : MonoBehaviour, IOnEnd<EnemyController>, IPausable
     IEnumerator Start()
     {
         dormantEnemies = new();
-        yield return new WaitForSeconds(path.startDelay);
+        yield return new PauseWaitUntil(path.startDelay);
         for (int i = 0; i < path.count; i++)
             dormantEnemies.Add(Instantiate(path.prefab, path.points[0], Quaternion.Euler(180,0,0), transform));
         
@@ -55,7 +56,7 @@ public class EnemyController : MonoBehaviour, IOnEnd<EnemyController>, IPausable
             enemies.Add(enemy);
             enemy.onEnd = (en) => enemies.Remove(en);
             dormantEnemies.RemoveAt(0);
-            yield return new WaitForSeconds(path.delay);
+            yield return new PauseWaitUntil(path.delay);
         }
         spawnedAll = true;
     }
@@ -77,6 +78,7 @@ public class EnemyController : MonoBehaviour, IOnEnd<EnemyController>, IPausable
         enabled = false;
     }
 
+
     void Move(Enemy enemy)
     {
         int i = enemy.waypoint;
@@ -94,11 +96,11 @@ public class EnemyController : MonoBehaviour, IOnEnd<EnemyController>, IPausable
 
     public void OnPause()
     {
-        gameObject.SetActive(false);
+        enabled = false;
     }
 
     public void OnResume()
     {
-        gameObject.SetActive(true);
+        enabled = true;
     }
 }

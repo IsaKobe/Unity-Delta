@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0f5ba9efc84bec4db61b5aad0eb25cf, type: 3}
+  m_Name: Rocket
+  m_EditorClassIdentifier: Assembly-CSharp::Rocket
+  image: {fileID: 2800000, guid: 1aa0ec64e99fce04a861ca6193107cee, type: 3}
+  Name: Rockets
+  paragraph: Auto-guiding rockets that are fired periodicaly.
+  maxLevel: 5
+  costs: 14000000280000003c0000005000000064000000
+  data:
+  - 2
+  - 1.7
+  - 1.4
+  - 1.2
+  - 1

@@ -6,8 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
+using World;
 
-namespace Player.PlayerInput
+namespace Player.PlayerInputs
 {
     public class PlayerInput : MonoBehaviour, IPausable
     {
@@ -28,6 +30,8 @@ namespace Player.PlayerInput
         Vector3 move;
         Rigidbody2D rb;
 
+        float rocketCooldown;
+
 
         void Awake()
         {
@@ -38,16 +42,34 @@ namespace Player.PlayerInput
             movement = asset.FindActionMap("Player").FindAction("Movement");
             fire = asset.FindActionMap("Player").FindAction("Fire");
             special = asset.FindActionMap("Player").FindAction("Special");
+
+            rocketCooldown = 0;
         }
 
         void Special(InputAction.CallbackContext obj)
         {
             Debug.Log($"Special {obj.ReadValue<float>()}");
-            if (obj.ReadValue<float>() == 1)
+            /*if (canFireRockets && obj.ReadValue<float>() == 1)
             {
+                RProjController.GetProjectile(rocketData, transform);
+            }*/
+        }
+
+        public void EnableRockets(float cooldown)
+        {
+            rocketCooldown = cooldown;
+            StartCoroutine(FireRocket());
+        }
+
+        IEnumerator FireRocket()
+        {
+            while (true)
+            {
+                yield return new PauseWaitUntil(rocketCooldown);
                 RProjController.GetProjectile(rocketData, transform);
             }
         }
+
 
         void Fire(InputAction.CallbackContext context)
         {
@@ -89,7 +111,6 @@ namespace Player.PlayerInput
         {
             enabled = true;
             asset.Enable();
-
         }
     }
 

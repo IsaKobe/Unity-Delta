@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
+[RequireComponent(typeof(UIDocument))]
 public class EndScreen : MonoBehaviour
 {
     UIDocument document;
@@ -16,6 +17,7 @@ public class EndScreen : MonoBehaviour
     {
         PrepScreen("Victory", scoreManager.Score);
         document.rootVisualElement.Q<Button>("Continue").clicked += () => Debug.Log("adsadsad");
+        SaveController.SaveData(scoreManager.Score, scoreManager.Score/2);
     }
 
 
@@ -27,7 +29,17 @@ public class EndScreen : MonoBehaviour
         document.rootVisualElement.Q<Label>("Title").text = title;
         document.rootVisualElement.Q<Label>("TotalScore").text = score.ToString();
 
-        document.rootVisualElement.Q<Button>("Retry").clicked += () => SceneManager.LoadScene(0);
-        document.rootVisualElement.Q<Button>("Exit").clicked += () => Application.Quit();
+        int index = SceneManager.GetActiveScene().buildIndex;
+
+        document.rootVisualElement.Q<Button>("Retry").clicked += () => SceneManager.LoadScene(index);
+        document.rootVisualElement.Q<Button>("Exit").clicked += GoToMainMenu;
+    }
+
+    public static async void GoToMainMenu()
+    {
+        int index = SceneManager.GetActiveScene().buildIndex;
+        await SceneManager.LoadSceneAsync(0, LoadSceneMode.Additive);
+        GameObject.Find("Main Menu").GetComponent<MainMenu>().OpenMap();// map.rootVisualElement.style.display = DisplayStyle.Flex;
+        await SceneManager.UnloadSceneAsync(index);
     }
 }

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab6afded6756f0045a8e988cd4e63224, type: 3}
+  m_Name: Wave 2
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyWave
+  points:
+  - {x: -12.683356, y: -4.52695, z: 0}
+  - {x: 8.177507, y: 3.8311317, z: 0}
+  - {x: -4.7972994, y: 1.0460114, z: 0}
+  - {x: -8.410951, y: 3.2423053, z: 0}
+  - {x: 2.3057404, y: 0.51711154, z: 0}
+  - {x: 7.1355257, y: 1.9216188, z: 0}
+  - {x: 1.5724804, y: 8.073834, z: 0}
+  prefab: {fileID: 4805792269409386989, guid: 2f12bc1c7ef9f234e9a26c9496197cda, type: 3}
+  count: 2
+  startDelay: 7
+  delay: 1

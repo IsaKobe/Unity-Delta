@@ -1,12 +1,8 @@
-using NUnit.Framework;
+using Player.PlayerInputs;
 using Projectiles;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using TMPro;
 using Unity.Properties;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 namespace Player
@@ -18,12 +14,23 @@ namespace Player
             propertyChanged?.Invoke(this, new(property));
         }
 
-        [SerializeField] float maxHealth;
+        public float maxHealth;
 
         [CreateProperty]
-        public float Health { get => health; set => health = value; }
+        public float Health
+        { 
+            get => health;
+            set 
+            { 
+                health = value;
+                UIUpdate(nameof(Health));
+            } 
+        }
 
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
+
+        public PlayerInput Input;
+
 
         public Action<Ship> onEnd { get; set; }
 
@@ -63,9 +70,13 @@ namespace Player
 
         protected override void Die(bool naturalDeath = true)
         {
-            onEnd(this);
-            base.Die();
-            Debug.LogWarning("you lost");
+            if (enabled)
+            {
+                enabled = false;
+                onEnd(this);
+                base.Die();
+                Debug.LogWarning("you lost");
+            }
         }
     }
 }
