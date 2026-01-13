@@ -10,11 +10,12 @@ public class RocketTurret : Turret
 
     protected override void OnShoot()
     {
-        RProjController.GetProjectile(rocketData, transform);
+        RProjController.GetProjectile(rocketData, rb);
     }
 
     protected override void Awake()
     {
-        //rocketData = Instantiate(rocketData);
+        base.Awake();
+        rocketData = Instantiate(rocketData);
     }
 }

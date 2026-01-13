@@ -4,15 +4,22 @@ using System.Collections;
 using UnityEngine;
 using World;
 
-public abstract class Turret : DamagableObject, IOnEnd<Turret>, IPausable
+[RequireComponent(typeof(DownMover))]
+public abstract class Turret : DamagableObject, IOnEnd<Turret>, IPausable, IScorable
 {
     [SerializeField] int cooldown;
     [SerializeField] protected bool activated = false;
     [SerializeField] int score;
+    int IScorable.Score { get => score; }
+
+    protected Rigidbody2D rb;
 
     public Action<Turret> onEnd { get; set; }
 
-    protected abstract void Awake();
+    protected virtual void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -59,9 +66,10 @@ public abstract class Turret : DamagableObject, IOnEnd<Turret>, IPausable
         Deactivate();
         if (naturalDeath)
         {
-            WorldController.AddScore(score);
+            (this as IScorable).AddScore();
         }
         onEnd(this);
+        ((IPausable)this).Detach(WorldController.TimeController);
         base.Die(naturalDeath);
     }
 

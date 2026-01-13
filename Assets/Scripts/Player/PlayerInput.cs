@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using World;
+using System.ComponentModel;
 
 namespace Player.PlayerInputs
 {
@@ -30,7 +31,7 @@ namespace Player.PlayerInputs
         Vector3 move;
         Rigidbody2D rb;
 
-        float rocketCooldown;
+        [SerializeField, ReadOnly(true)]float rocketCooldown;
 
 
         void Awake()
@@ -49,10 +50,6 @@ namespace Player.PlayerInputs
         void Special(InputAction.CallbackContext obj)
         {
             Debug.Log($"Special {obj.ReadValue<float>()}");
-            /*if (canFireRockets && obj.ReadValue<float>() == 1)
-            {
-                RProjController.GetProjectile(rocketData, transform);
-            }*/
         }
 
         public void EnableRockets(float cooldown)
@@ -66,14 +63,14 @@ namespace Player.PlayerInputs
             while (true)
             {
                 yield return new PauseWaitUntil(rocketCooldown);
-                RProjController.GetProjectile(rocketData, transform);
+                RProjController.GetProjectile(rocketData, rb);
             }
         }
 
 
         void Fire(InputAction.CallbackContext context)
         {
-            SProjController.GetProjectile(projData, transform);
+            SProjController.GetProjectile(projData, rb);
         }
 
         private void OnDisable()

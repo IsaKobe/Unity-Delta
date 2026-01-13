@@ -78,6 +78,8 @@ public class SaveController : MonoBehaviour, IUpdatable
 
     public static void SaveData(int score, int money)
     {
+        if (OpenedScene == -1)
+            return;
         instance.data.SetData(OpenedScene, new(score));
         instance.data.money += money;
         instance.SaveToFile();

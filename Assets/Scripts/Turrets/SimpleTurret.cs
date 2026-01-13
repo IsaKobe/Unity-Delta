@@ -9,10 +9,11 @@ public class SimpleTurret : Turret
     [SerializeField] SimpleProjData data;
     protected override void OnShoot()
     {
-        SimpleProjectile simpleProjectile = SProjController.GetProjectile(data, transform);
+        SimpleProjectile simpleProjectile = SProjController.GetProjectile(data, rb);
     }
     protected override void Awake()
     {
+        base.Awake();
         data = Instantiate(data);
         Activate();
     }

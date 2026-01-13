@@ -156,6 +156,7 @@ MonoBehaviour:
   shield: {fileID: 0}
   projData: {fileID: 11400000, guid: ffb2e05bda0364e46a2744375c86d477, type: 2}
   rocketData: {fileID: 11400000, guid: 48690b6869d51da49acef898b46833bc, type: 2}
+  rocketCooldown: 0
 --- !u!1 &1910067007420667112
 GameObject:
   m_ObjectHideFlags: 0

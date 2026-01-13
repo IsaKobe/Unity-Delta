@@ -19,5 +19,5 @@ MonoBehaviour:
   damage: 10
   speed: 0.1
   isPlayerProj: 0
-  timeToLive: 15
+  timeToLive: 5
   rotSpeed: 4

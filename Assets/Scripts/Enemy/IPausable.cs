@@ -9,12 +9,12 @@ public interface IPausable
 
     public void Attach(TimeController timeController)
     {
-        Attach(ref timeController.onPause, ref timeController.onResume);
+        timeController.onPause += OnPause;
+        timeController.onResume += OnResume;
     }
-
-    void Attach(ref Action pause, ref Action resume)
+    public void Detach(TimeController timeController)
     {
-        pause += OnPause;
-        resume += OnResume;
+        timeController.onPause -= OnPause;
+        timeController.onResume -= OnResume;
     }
 }

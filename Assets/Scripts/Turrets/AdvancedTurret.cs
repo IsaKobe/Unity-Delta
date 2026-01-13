@@ -14,18 +14,20 @@ public class AdvancedTurret : Turret
     [SerializeField] VecProjData projData;
 
     Vector3 direction;
-
     protected override void Awake()
     {
+        base.Awake();
         projData = Instantiate(projData);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!activated)
             return;
-        direction = WorldController.Ship.transform.position - transform.position;
-        transform.up = Vector3.Lerp(transform.up, direction, rotSpeed * Time.deltaTime);
+        Vector2 v = WorldController.Ship.transform.position - transform.position;
+        float newRot = (Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg) - 90;
+        newRot = Mathf.MoveTowardsAngle(rb.rotation, newRot, rotSpeed);
+        rb.SetRotation(newRot);
     }
 
     public override void Activate()
@@ -46,6 +48,6 @@ public class AdvancedTurret : Turret
     {
         projData.initialVector = transform.up;
 
-        VProjController.GetProjectile(projData, transform);
+        VProjController.GetProjectile(projData, rb);
     }
 }

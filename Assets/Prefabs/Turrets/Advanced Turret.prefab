@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6694540589491504125}
   - component: {fileID: 7327037836087099054}
   - component: {fileID: 1269319926013768410}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Advanced Turret
   m_TagString: Turret
   m_Icon: {fileID: 0}
@@ -49,6 +49,7 @@ MonoBehaviour:
   health: 100
   cooldown: 2
   activated: 0
+  score: 0
   initCooldown: 2
   rotSpeed: 1
   projData: {fileID: 11400000, guid: 6a3f6f5e328b7af4e8634f1a34f06621, type: 2}

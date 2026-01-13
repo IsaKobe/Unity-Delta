@@ -37,11 +37,11 @@ namespace Projectiles.Controllers
             ((IPausable)this).Attach(WorldController.TimeController);
         }
 
-        public static T GetProjectile(ProjData data, Transform transform, bool enable = true)
+        public static T GetProjectile(ProjData data, Rigidbody2D _rb, bool enable = true)
         {
             T proj = instance.GetProj();
-            proj.transform.position = transform.position;
-            proj.transform.rotation = transform.rotation;
+            proj.transform.position = _rb.position;
+            proj.transform.rotation = Quaternion.Euler(0, 0, _rb.rotation);
 
             proj.transform.localScale = data.size;
             proj.GetComponent<CapsuleCollider2D>().size = data.colliderSize;
@@ -72,10 +72,11 @@ namespace Projectiles.Controllers
         T CreateProjectile()
         {
             GameObject gObject = new("Projectile", typeof(SpriteRenderer));
+            gObject.layer = LayerMask.NameToLayer("Projectiles");
             gObject.SetActive(false);
 
             Rigidbody2D rb = gObject.AddComponent<Rigidbody2D>();
-            rb.gravityScale = 0;
+            rb.bodyType = RigidbodyType2D.Kinematic;
 
             CapsuleCollider2D capsuleCollider = gObject.AddComponent<CapsuleCollider2D>();
             capsuleCollider.isTrigger = true;

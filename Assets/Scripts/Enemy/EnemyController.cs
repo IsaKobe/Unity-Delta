@@ -82,10 +82,11 @@ public class EnemyController : MonoBehaviour, IOnEnd<EnemyController>, IPausable
     void Move(Enemy enemy)
     {
         int i = enemy.waypoint;
-        enemy.transform.position = Vector2.MoveTowards(
-            enemy.transform.position,
-            path.points[i],
-            enemy.Speed * Time.deltaTime);
+        enemy.rb.MovePosition(
+            Vector2.MoveTowards(
+                enemy.transform.position,
+                path.points[i],
+                enemy.Speed));
         if (enemy.transform.position == path.points[i])
         {
             enemy.waypoint++;

@@ -3,13 +3,24 @@ using System;
 using UnityEngine;
 using World;
 
-public class Enemy : DamagableObject, IOnEnd<Enemy>
+[RequireComponent(typeof(Rigidbody2D))]
+public class Enemy : DamagableObject, IOnEnd<Enemy>, IScorable
 {
     public int waypoint;
     public float Speed;
-    [SerializeField] int score;
     
+    [SerializeField] int score;
+    int IScorable.Score { get => score; }
+
+    public Rigidbody2D rb { get; private set; }
     public Action<Enemy> onEnd { get; set; }
+
+    protected virtual void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+    }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -26,7 +37,7 @@ public class Enemy : DamagableObject, IOnEnd<Enemy>
     {
         if (naturalDeath)
         {
-            WorldController.AddScore(score);
+            (this as IScorable).AddScore();
         }
         onEnd(this);
         base.Die();

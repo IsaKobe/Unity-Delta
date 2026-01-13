@@ -17,7 +17,7 @@ public class EndScreen : MonoBehaviour
     {
         PrepScreen("Victory", scoreManager.Score);
         document.rootVisualElement.Q<Button>("Continue").clicked += () => Debug.Log("adsadsad");
-        SaveController.SaveData(scoreManager.Score, scoreManager.Score/2);
+        SaveController.SaveData(scoreManager.Score, scoreManager.Score / 2);
     }
 
 

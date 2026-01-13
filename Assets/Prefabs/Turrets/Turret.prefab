@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4423475133088266878}
   - component: {fileID: 5245050536161003661}
   - component: {fileID: 8296861845845440499}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Turret
   m_TagString: Turret
   m_Icon: {fileID: 0}
@@ -108,6 +108,7 @@ MonoBehaviour:
   health: 100
   cooldown: 1
   activated: 0
+  score: 0
   data: {fileID: 11400000, guid: 6fb85e2ffa2c3d34faef64c8af24daff, type: 2}
 --- !u!61 &8296861845845440499
 BoxCollider2D:

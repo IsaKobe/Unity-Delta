@@ -14,37 +14,38 @@ namespace Projectiles
     {
         [SerializeField] float rotSpeed;
         [SerializeField] float projectileLife = 10;
-        [SerializeField] Transform target;
 
+        [SerializeField] Transform target;
+        bool rotate = true;
         IEnumerator TimeOut()
         {
             yield return new PauseWaitUntil(projectileLife);
-            HandleDelete();
+            rotate = false;
+            //HandleDelete();
         }
 
         public override void Move()
         {
             Vector3 newPos = transform.position + (transform.up * speed);
 
-            float newRot = transform.rotation.eulerAngles.z;
-            if (target)
+            if (rotate)
             {
-                Vector3 diff = target.position - transform.position;
-                float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg - 90;
-                newRot = Mathf.MoveTowardsAngle(newRot, rot_z, rotSpeed);
-            }
-            else
-            {
-                FindTarget();
+                if (!target)
+                    FindTarget();
                 if (target)
                 {
-                    Move();
-                    return;
+                    float newRot = transform.rotation.eulerAngles.z;
+
+                    Vector3 diff = target.position - transform.position;
+                    float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg - 90;
+                    newRot = Mathf.MoveTowardsAngle(newRot, rot_z, rotSpeed);
+                    
+                    rb.MovePositionAndRotation(newPos, newRot);
                 }
             }
-
-            rb.MovePositionAndRotation(newPos, Quaternion.Euler(0, 0, newRot));
+            rb.MovePosition(newPos);
         }
+
 
         public override void SetStats(ProjData data)
         {

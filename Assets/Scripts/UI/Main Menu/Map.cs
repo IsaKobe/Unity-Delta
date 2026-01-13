@@ -69,11 +69,10 @@ public class Map : MonoBehaviour
 
     void GoBack()
     {
-        GetComponent<UIDocument>().rootVisualElement.style.display = DisplayStyle.None; //.SetActive(false);
+        GetComponent<UIDocument>().rootVisualElement.style.display = DisplayStyle.None;
     }
     void OpenShop()
     {
         shop.GetComponent<UIDocument>().rootVisualElement.style.display = DisplayStyle.Flex;
-        
     }
 }

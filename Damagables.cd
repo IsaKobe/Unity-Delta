@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DamagableObject" Collapsed="true">
+    <Position X="7.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAgAAAAAAAAAEAAAAAAAAAACAAAAAg=</HashCode>
+      <FileName>Assets\Scripts\DamagableObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Enemy" Collapsed="true">
+    <Position X="3.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAkAAAKAAABAEIAAAAAAAAIAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Enemy\Enemy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Left" Position="0.102" />
+  </Class>
+  <Class Name="Shield" Collapsed="true">
+    <Position X="6" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\Shield.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player.Ship" Collapsed="true">
+    <Position X="8" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgACACIAiAAAAAgAABCAAAAEEAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\Ship.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Right" Position="0.337" />
+  </Class>
+  <Class Name="Turret" Collapsed="true">
+    <Position X="11" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQABAAAhkAAAKUAAAAGAAAAAAAAAIABAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Turrets\Turret.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Right" Position="0.1" />
+  </Class>
+  <Class Name="AdvancedTurret" Collapsed="true">
+    <Position X="8.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAwgABIABAAAAAAAAAgAAAAAAIAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Turrets\AdvancedTurret.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RocketTurret" Collapsed="true">
+    <Position X="11" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAABAAAAAAAIAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Turrets\RocketTurret.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimpleTurret" Collapsed="true">
+    <Position X="13.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\Turrets\SimpleTurret.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
