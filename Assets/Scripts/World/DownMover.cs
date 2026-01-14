@@ -15,8 +15,11 @@ public class DownMover : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Vector2 vector = transform.position;
-        vector.y -= MapMovement.Speed;
-        rb.MovePosition(vector);
+        if (MapMovement.Speed > 0)
+        {
+            Vector2 vector = transform.position;
+            vector.y -= MapMovement.Speed;
+            rb.MovePosition(vector);
+        }
     }
 }

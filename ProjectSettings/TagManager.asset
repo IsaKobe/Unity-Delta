@@ -9,6 +9,7 @@ TagManager:
   - EnemyProjectile
   - Turret
   - ProjectilePoolTrans
+  - Shop
   layers:
   - Default
   - TransparentFX

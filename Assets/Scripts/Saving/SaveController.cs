@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 public class SaveController : MonoBehaviour, IUpdatable
 {
     [SerializeField] int levelCount;
-    [SerializeField] Shop shop;
+     Shop shop;
 
     [SerializeField] SaveData data;
 
@@ -45,8 +45,10 @@ public class SaveController : MonoBehaviour, IUpdatable
 
     private void Start()
     {
+        shop = GameObject.FindWithTag("Shop").GetComponent<Shop>();
         if (instance != null)
         {
+            shop.LoadItems(instance.data.itemLevels);
             Destroy(gameObject);
             return;
         }
