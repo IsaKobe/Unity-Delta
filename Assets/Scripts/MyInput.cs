@@ -5,12 +5,12 @@ public class MyInput : MonoBehaviour
 {
     [SerializeField] InputActionAsset inputActions;
 
-    InputAction move;
-    InputAction fire;
+    protected InputAction move;
+    protected InputAction fire;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    protected virtual void Awake()
     {
-        transform.Translate(Vector3.up * 2);
+        //transform.Translate(Vector3.up * 2);
         move = inputActions.FindAction("Move");
         fire = inputActions.FindAction("Fire");
     }
@@ -24,25 +24,25 @@ public class MyInput : MonoBehaviour
         fire.canceled += Fire_cancled;
     }
 
-    private void Fire_started(InputAction.CallbackContext obj)
+    protected virtual void Fire_started(InputAction.CallbackContext obj)
     {
         Debug.Log("Fire action started");
     }
-    private void Fire_performed(InputAction.CallbackContext obj)
+    protected virtual void Fire_performed(InputAction.CallbackContext obj)
     {
         Debug.Log("Fire action triggered");
     }
-    private void Fire_cancled(InputAction.CallbackContext obj)
+    protected virtual void Fire_cancled(InputAction.CallbackContext obj)
     {
         Debug.Log("Fire action canceled");
     }
 
-    private void Move_performed(InputAction.CallbackContext obj)
+    protected virtual void Move_performed(InputAction.CallbackContext obj)
     {
         Debug.Log("Move: " + move.ReadValue<Vector2>());
     }
 
-
+    
 
     private void OnDisable()
     {

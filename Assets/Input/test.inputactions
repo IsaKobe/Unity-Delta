@@ -149,7 +149,7 @@
                     "name": "",
                     "id": "823d536a-ee91-445f-a983-cac8390154c3",
                     "path": "<Keyboard>/space",
-                    "interactions": "MultiTap",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Fire",
