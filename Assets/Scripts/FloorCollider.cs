@@ -5,11 +5,17 @@ public class FloorCollider : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collided with: " + collision.gameObject.name);
+        if(collision.gameObject.TryGetComponent<newInput>(out newInput input))
+        {
+            input.canJump = true;
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionExit(Collision collision)
     {
-        Debug.Log("Triggered with: " + other.gameObject.name);
+        if (collision.gameObject.TryGetComponent<newInput>(out newInput input))
+        {
+            input.canJump = false;
+        }
     }
 }

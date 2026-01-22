@@ -53,14 +53,13 @@ public class MyInput : MonoBehaviour
     }
 
     // Update is called once per frame
-    /*void Update()
+    void Update()
     {
         Debug.Log("Fire:" + fire.ReadValue<float>());
-        return;
         Debug.Log("Move: " + move.ReadValue<Vector2>());
         if(fire.triggered)
         {
             Debug.Log("Fire action triggered");
         }
-    }*/
+    }
 }

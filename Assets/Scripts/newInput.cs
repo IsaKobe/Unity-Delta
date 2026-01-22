@@ -7,10 +7,13 @@ public class newInput : MonoBehaviour
     [SerializeField] Rigidbody rb;
     InputAction move;
     InputAction fire;
+
     Vector3 newMove;
     bool jump = false;
 
     [SerializeField] float speed = 1;
+    internal bool canJump;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -35,7 +38,7 @@ public class newInput : MonoBehaviour
         newMove = move.ReadValue<Vector2>();
         newMove.z = newMove.y;
         newMove.y = 0;
-        if(fire.triggered)
+        if(canJump && fire.triggered)
             jump = true;
         /*
         //transform.localPosition += newMove * Time.deltaTime;
@@ -57,4 +60,5 @@ public class newInput : MonoBehaviour
             jump = false;
         }
     }
+
 }
