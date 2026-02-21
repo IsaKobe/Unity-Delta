@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,6 +6,7 @@ public class newInput : MonoBehaviour
 {
     [SerializeField] InputActionAsset inputActions;
     [SerializeField] Rigidbody rb;
+    [SerializeField] GameObject cubePref;
     InputAction move;
     InputAction fire;
 
@@ -19,6 +21,16 @@ public class newInput : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         move = inputActions.FindAction("Move");
         fire = inputActions.FindAction("Fire");
+        StartCoroutine(SpawnEnemies());
+    }
+
+    IEnumerator SpawnEnemies()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            yield return new WaitForSeconds(0.5f);
+            Debug.Log("Spawn");
+        }
     }
 
     private void OnEnable()
@@ -58,6 +70,21 @@ public class newInput : MonoBehaviour
         {
             rb.AddForce(Vector3.up * 5, ForceMode.Impulse);
             jump = false;
+
+
+            //Instantite(prefab, position, rotation, parent)
+            GameObject cube = Instantiate(cubePref, transform.position, transform.rotation, transform); 
+            /*GameObject game = new GameObject("copy");
+            game.transform.position = transform.position;
+            Rigidbody rbCopy = game.AddComponent<Rigidbody>();
+            game.AddComponent<MeshRenderer>();
+            MeshFilter filter = game.AddComponent<MeshFilter>();
+            filter.mesh = GetComponent<MeshFilter>().mesh;
+
+            game.SetActive(false);
+            newInput input = game.AddComponent<newInput>();
+            input.inputActions = inputActions;
+            game.SetActive(true);*/
         }
     }
 
