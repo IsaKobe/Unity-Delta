@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            collision.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+            collision.gameObject.GetComponent<IDamagable>().ReceiveDamage(damage);
             returnToPool(gameObject);
         }
         else if (collision.gameObject.CompareTag("Wall"))

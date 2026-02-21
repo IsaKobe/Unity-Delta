@@ -1,0 +1,6 @@
+:root {
+}
+
+#Health > #unity-progress-bar {
+    max-height: none;
+}
