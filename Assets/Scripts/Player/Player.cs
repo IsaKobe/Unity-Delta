@@ -8,39 +8,37 @@ using UnityEngine.UIElements;
 
 namespace Assets.Scripts.Player
 {
-    public class Player : MonoBehaviour, IDamagable, IUpdatable
+    public class Player : MonoBehaviour, IDamagable
     {
-        public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
+        [SerializeField] UIDocument doc;
+        ProgressBar healthBar;
 
         [SerializeField] float maxHealth;
         public float MaxHealth => maxHealth;
         [SerializeField] float health;
 
-        
-        [CreateProperty]
+
         public float Health 
         { 
             get => health; 
             set 
             { 
-                health = value; 
-                //UIUpdate(nameof(Health)); 
-            } 
+                health = value;
+                healthBar.value = health;
+            }
         }
 
         private void Start()
         {
+            healthBar = doc.rootVisualElement.Q<ProgressBar>("Health");
             Health = maxHealth;
+            healthBar.highValue = maxHealth;
+            healthBar.value = health;
         }
 
         public void OnDeath()
         {
             Debug.Log("Game Lost!");
-        }
-
-        public void UIUpdate(string property = "")
-        {
-            propertyChanged?.Invoke(this, new(property));
         }
 
         private void OnCollisionEnter2D(Collision2D collision)

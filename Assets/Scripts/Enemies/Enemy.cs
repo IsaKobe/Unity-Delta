@@ -3,26 +3,17 @@ using Assets.Scripts.Enemies;
 using System;
 using UnityEngine;
 
-public class Enemy : DamagableObject
+public class Enemy : MonoBehaviour, IDamagable
 {
-    [SerializeField] float armor;
-    public override void TakeDamage(float damage)
-    {
-        float dam = damage - armor;
-        base.TakeDamage(dam);
-    }
+    //[SerializeField] float armor;
 
-    protected override void OnDeath()
+    public float Health { get; set; }
+    public float Score { get; set; }
+
+    void IDamagable.OnDeath()
     {
+        ScoreManager.AddScore(Score);
         Destroy(gameObject);
     }
-
-    /*    [SerializeField] float health = 30;
-        public float Health { get => health; set => health = value; }
-    *//*
-        public void OnDeath()
-        {
-            Destroy(gameObject);
-        }*/
 
 }
