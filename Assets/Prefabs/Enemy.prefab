@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6350810453667308247}
   - component: {fileID: 4660126018606562005}
   - component: {fileID: 2852048394474682136}
-  - component: {fileID: 5355236114325969554}
-  m_Layer: 0
+  - component: {fileID: -1115999076824776642}
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &5355236114325969554
+--- !u!114 &-1115999076824776642
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,7 +180,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 792621576604648626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dc583df035422d42984e8e63e117b55, type: 3}
+  m_Script: {fileID: 11500000, guid: ecb01c905a0ca304a90d5c0d6fbac3b3, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
-  Health: 3
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Enemies.MovingEnemy
+  speed: 0.2
+  currentWaypoint: 0
+  wave: 0

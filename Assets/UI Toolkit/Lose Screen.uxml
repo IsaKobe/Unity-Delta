@@ -1,0 +1,11 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Styles/lose.uss?fileID=7433441132597879392&amp;guid=98434ba4ff69eef4b896bbd0d5df8a2b&amp;type=3#lose"/>
+    <ui:VisualElement style="flex-grow: 1; background-color: rgb(72, 72, 72); align-items: center; padding-top: 5%;">
+        <ui:Label text="You suck!" class="label"/>
+        <ui:Label text="Try harder!" name="Label" style="font-size: 50px;"/>
+        <ui:VisualElement style="flex-grow: 1; position: absolute; bottom: 5%; flex-direction: row; width: 100%; justify-content: space-around;">
+            <ui:Button text="Button" name="Level" class="button"/>
+            <ui:Button text="Button" name="MainMenu" class="button"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

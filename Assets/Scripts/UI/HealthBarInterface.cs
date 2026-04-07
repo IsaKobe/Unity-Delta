@@ -8,14 +8,18 @@ public class HealthBarInterface : MonoBehaviour
     private void Awake()
     {
         UIDocument document = GetComponent<UIDocument>();
-        Slider healthSlider = document.rootVisualElement.Q<Slider>();
+        ProgressBar healthBar = document.rootVisualElement.Q<ProgressBar>();
 
-        healthSlider.dataSource = player;
+
+        healthBar.highValue = player.MaxHealth;
+        healthBar.value = player.Health;
+
+        healthBar.dataSource = player;
         DataBinding binding = new DataBinding()
         {
             dataSourcePath = new(nameof(Player.Health)),
             bindingMode = BindingMode.ToTarget
         };
-        healthSlider.SetBinding(new(nameof(Player.Health)), binding);
+        healthBar.SetBinding(new(nameof(ProgressBar.value)), binding);
     }
 }

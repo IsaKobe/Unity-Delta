@@ -1,0 +1,6 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/UI%20Toolkit/Styles/spawner.uss?fileID=7433441132597879392&amp;guid=92cb924255fd524458cdd536d78559a2&amp;type=3#spawner"/>
+    <ui:ListView item-template="project://database/Assets/Resources/Editor/Wave.uxml?fileID=9197481963319205126&amp;guid=973b293a8c72191429c4e9ebc0327fae&amp;type=3#Wave" header-title="Waves" name="Waves" show-add-remove-footer="true" reorderable="true" allow-remove="true" show-foldout-header="true" show-border="true" virtualization-method="DynamicHeight"/>
+    <ui:RadioButtonGroup label="SelectedWave" name="Selectors" value="-1"/>
+    <ui:ListView header-title="Positions" show-add-remove-footer="true" show-foldout-header="true" allow-add="true" allow-remove="true" name="Positions" reorderable="true" show-border="true"/>
+</ui:UXML>

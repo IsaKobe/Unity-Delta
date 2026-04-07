@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts
 {
@@ -29,7 +31,28 @@ namespace Assets.Scripts
 
         public static void AddScore(float _score)
         {
+            return;
             instance.score += _score;
+        }
+
+        public static void EndGame(bool victory)
+        {
+            instance.StartEndGame(victory);
+        }
+
+        void StartEndGame(bool victory)
+        {
+            StartCoroutine(LoadEnd(victory));
+        }
+
+        IEnumerator LoadEnd(bool victory) 
+        {
+            yield break;
+            yield return SceneManager.LoadSceneAsync("End", LoadSceneMode.Additive);
+            GameObject obj = GameObject.FindGameObjectWithTag("EndScreen");
+
+
+            yield return SceneManager.UnloadSceneAsync(gameObject.scene);
         }
     }
 }

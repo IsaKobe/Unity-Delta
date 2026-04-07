@@ -1,0 +1,10 @@
+ObjectField Label {
+    min-width: auto;
+}
+
+ObjectField {
+    flex-grow: 1;
+}
+
+ObjectField > VisualElement {
+}

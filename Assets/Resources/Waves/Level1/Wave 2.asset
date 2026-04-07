@@ -16,4 +16,7 @@ MonoBehaviour:
   enemyCount: 9
   delay: 0.5
   initialDelay: 2
-  spawnPoint: {x: 0, y: 2, z: 0}
+  spawnPoint: {x: 0, y: 2}
+  path:
+  - {x: -7.8171296, y: -2.559218}
+  - {x: 4.3268003, y: 1.4971968}

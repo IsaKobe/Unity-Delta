@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Wall
+  - EndScreen
   layers:
   - Default
   - TransparentFX
@@ -13,10 +14,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Wall
+  - Player
+  - Enemy
+  - Projectile
   - 
   - 
   - 
