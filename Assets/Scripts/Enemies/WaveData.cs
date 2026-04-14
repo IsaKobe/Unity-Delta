@@ -13,7 +13,7 @@ namespace Assets.Scripts
         public int enemyCount;
         public float delay;
         public float initialDelay;
-        public Vector2 spawnPoint;
+        //public Vector2 spawnPoint;
         public List<Vector2> path;
     }
 

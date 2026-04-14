@@ -9,9 +9,9 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
 
-    /*private void OnDrawGizmos()
+/*    private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
+        Gizmos.color = Color.beige;
         Gizmos.DrawWireSphere(transform.position, 1);
     }*/
 

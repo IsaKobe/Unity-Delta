@@ -6,7 +6,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[CustomEditor(typeof(Spawner))]
+//[CustomEditor(typeof(Spawner))]
 public class SpawnerEditor : Editor
 {
     ListView positionList;
@@ -14,7 +14,7 @@ public class SpawnerEditor : Editor
     int selectedPoint;
 
 
-    public override VisualElement CreateInspectorGUI()
+    /*public override VisualElement CreateInspectorGUI()
     {
         Spawner spawner = (Spawner)target;
         
@@ -25,9 +25,9 @@ public class SpawnerEditor : Editor
 
         SerializedProperty waves = serializedObject.FindProperty(nameof(Spawner.waves));
         view.makeItem = () =>
-        {/*
+        {*//*
             VisualElement e = view.itemTemplate.CloneTree();
-            return e;*/
+            return e;*//*
             VisualElement e = new VisualElement()
             {
                 style =
@@ -124,10 +124,19 @@ public class SpawnerEditor : Editor
         #endregion
         return element;
     }
-
+*/
     void OnSceneGUI()
     {
         Spawner spawner = (Spawner)target;
+
+        WaveData data = spawner.waves[0];
+
+        for (int i = 0; i < data.path.Count-1; i++)
+        {
+            Handles.DrawLine(data.path[i], data.path[i + 1]);
+        }
+
+        /*Spawner spawner = (Spawner)target;
 
         SerializedObject wave = new SerializedObject(
             serializedObject.FindProperty(nameof(Spawner.waves))
@@ -159,7 +168,7 @@ public class SpawnerEditor : Editor
             }
             if (i < path.arraySize - 1)
                 Handles.DrawLine(position.vector2Value, path.GetArrayElementAtIndex(i+1).vector2Value);
-        }
+        }*/
         /*WaveData data = spawner.waves[index];
         for (int i = 0; i < data.path.Count; i++)
         {
