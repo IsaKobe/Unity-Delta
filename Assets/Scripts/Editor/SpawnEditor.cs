@@ -11,26 +11,45 @@ public class SpawnEditor : Editor
 {
 
     int selectedPoint = -1;
-    int selectedWave = 0;
+    int selectedWaveIndex = 0;
+
+    void OnEnable()
+    {
+        // Hides the default Move/Rotate/Scale handles
+        Tools.hidden = true;
+    }
+
+    void OnDisable()
+    {
+        // Shows the handles again when you deselect the object
+        Tools.hidden = false;
+    }
+
+
     private void OnSceneGUI()
     {
-        Spawner spawner = (Spawner)target;
-        WaveData data = spawner.waves[0];
-        for (int i = 0; i < data.path.Count; i++)
-        {
-            if(i != data.path.Count-1)
-                Handles.DrawLine(data.path[i], data.path[i+1]);
+        SerializedObject sO = serializedObject;
+        SerializedObject wave = new SerializedObject(
+            sO.FindProperty(nameof(Spawner.waves)).GetArrayElementAtIndex(selectedWaveIndex).objectReferenceValue);
 
-            if(Handles.Button(data.path[i], Quaternion.identity, 0.25f, 0.25f, Handles.SphereHandleCap))
+        SerializedProperty points = wave.FindProperty(nameof(WaveData.path));
+        for (int i = 0; i < points.arraySize; i++)
+        {
+            if(i != points.arraySize - 1)
+                Handles.DrawLine(
+                    points.GetArrayElementAtIndex(i).vector2Value, 
+                    points.GetArrayElementAtIndex(i+1).vector2Value);
+
+            if(Handles.Button(points.GetArrayElementAtIndex(i).vector2Value, Quaternion.identity, 0.25f, 0.25f, Handles.SphereHandleCap))
                 selectedPoint = i;
 
             if(selectedPoint == i)
             {
-                Vector2 temp = Handles.DoPositionHandle(data.path[i], Quaternion.identity);
-                if (data.path[i] != temp)
+                Vector2 temp = Handles.DoPositionHandle(points.GetArrayElementAtIndex(i).vector2Value, Quaternion.identity);
+                if (points.GetArrayElementAtIndex(i).vector2Value != temp)
                 {
-                    data.path[i] = temp;
-                    EditorUtility.SetDirty(data);
+                    points.GetArrayElementAtIndex(i).vector2Value = temp;
+                    wave.ApplyModifiedProperties();
                 }
             }
         }
@@ -40,31 +59,51 @@ public class SpawnEditor : Editor
         VisualTreeAsset asset = Resources.Load<VisualTreeAsset>("SpawnerInspector");
         VisualElement element = asset.CloneTree();
 
-        Spawner spawner = (Spawner)target;
-        List<WaveData> data = spawner.waves;
+        SerializedObject sO = serializedObject;
+        SerializedProperty waveProp = sO.FindProperty(nameof(Spawner.waves));
 
+
+        RadioButtonGroup group = element.Q<RadioButtonGroup>();
+        UpdateChoices(group, waveProp);
+        group.value = 0;
+        group.RegisterValueChangedCallback((ev) =>
+        {
+            selectedWaveIndex = ev.newValue;
+            UpdateWaveDetails(element);
+        });
 
         ListView waves = element.Q<ListView>("Waves");
-        waves.makeItem = () => new ObjectField() { objectType = typeof(WaveData)};
-        waves.bindItem = (el, i) =>
+        waves.BindProperty(waveProp);
+        waves.TrackPropertyValue(waveProp, (ev) =>
         {
+            UpdateChoices(group, ev);
+        });
 
-            ObjectField field = el as ObjectField;
-            field.value = data[i];
-            field.label = data[i] != null ? data[i].name : "empty";
-            field.userData = i;
-            field.RegisterValueChangedCallback(WaveChange);
-        };
-        waves.itemsSource = data;
-
+        UpdateWaveDetails(element);
         return element;
     }
-    void WaveChange(ChangeEvent<Object> ev)
+
+    void UpdateWaveDetails(VisualElement element)
     {
-        Spawner spawner = (Spawner)target;
-        int index = (int)((VisualElement)ev.target).userData;
-        WaveData wave = (WaveData)ev.newValue;
-        spawner.waves[index] = wave;
-        EditorUtility.SetDirty(target);
+        SerializedProperty waveProp = serializedObject.FindProperty(nameof(Spawner.waves));
+        SerializedObject w = new(waveProp.GetArrayElementAtIndex(selectedWaveIndex).objectReferenceValue);
+        SerializedProperty selectedWave = w.FindProperty(nameof(WaveData.path));
+        ListView positions = element.Q<ListView>("Positions");
+        positions.selectionChanged += (list) =>
+        {
+            selectedPoint = positions.selectedIndex;
+        };
+        positions.BindProperty(selectedWave);
+    }
+
+    void UpdateChoices(RadioButtonGroup group, SerializedProperty waveProp)
+    {
+        List<string> choices = new List<string>();
+        for (int i = 0; i < waveProp.arraySize; i++)
+        {
+            choices.Add(waveProp.GetArrayElementAtIndex(i).objectReferenceValue.name);
+        }
+
+        group.choices = choices;
     }
 }
