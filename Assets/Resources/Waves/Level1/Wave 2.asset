@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0d9524e0df177f44893268abf091d4c, type: 3}
   m_Name: Wave 2
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.WaveData
-  enemyPrefab: {fileID: 5355236114325969554, guid: 3cb923951260eec428bc6a96f688306c, type: 3}
+  enemyPrefab: {fileID: -1115999076824776642, guid: 3cb923951260eec428bc6a96f688306c, type: 3}
   enemyCount: 9
   delay: 0.5
   initialDelay: 2
-  spawnPoint: {x: 0, y: 2}
   path:
-  - {x: -7.8171296, y: -2.559218}
-  - {x: 4.3268003, y: 1.4971968}
+  - {x: -7.8, y: 3.3738232}
+  - {x: -2.3358274, y: -1.9287124}
+  - {x: 12.328922, y: -0.971437}
+  - {x: -6.446812, y: 8.162848}
+  - {x: 5.64, y: 6.59}

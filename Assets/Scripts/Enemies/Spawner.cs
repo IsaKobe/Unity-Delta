@@ -8,14 +8,6 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-
-/*    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.beige;
-        Gizmos.DrawWireSphere(transform.position, 1);
-    }*/
-
-
     public List<WaveData> waves;
 
     bool spawnerDone;
@@ -46,15 +38,30 @@ public class Spawner : MonoBehaviour
         spawnerDone = true;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        for (int i = enemies.Count - 1; i >= 0; i--)
+        foreach(MovingEnemy enemy in enemies)
         {
-            MovingEnemy enemy = enemies[i];
-            enemy.Move(waves[enemy.wave].path);
-        }
-    }
+            if (enemy.done)
+                continue;
 
+            WaveData wave = waves[enemy.wave];
+            Vector2 newPos = Vector2.MoveTowards(
+                enemy.transform.position,
+                wave.path[enemy.waypoint],
+                enemy.speed * Time.deltaTime);
+
+            if (Vector2.Distance(newPos, wave.path[enemy.waypoint]) < 0.01f)
+            {
+                enemy.waypoint++;
+                if (enemy.waypoint > wave.path.Count)
+                    enemy.done = true;
+            }
+            else
+                enemy.transform.position = newPos;
+        }
+        
+    }
     void OnEnemyDeath(Enemy enemy, bool awardScore)
     {
         if(awardScore)
