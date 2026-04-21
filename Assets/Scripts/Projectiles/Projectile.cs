@@ -25,7 +25,7 @@ public class Projectile : MonoBehaviour
             collision.gameObject.GetComponent<IDamagable>().ReceiveDamage(damage);
             returnToPool(gameObject);
         }
-        else if (collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag("Wall"))
         {
             returnToPool(gameObject);
         }

@@ -4,5 +4,4 @@
         <ui:Label text="Health"/>
         <ui:ProgressBar value="22" title="" name="Health" style="max-width: 20%; flex-grow: 1;"/>
     </ui:VisualElement>
-    <ui:Button text="Button" class="test"/>
 </ui:UXML>

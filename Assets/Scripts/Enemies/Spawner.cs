@@ -54,7 +54,7 @@ public class Spawner : MonoBehaviour
             if (Vector2.Distance(newPos, wave.path[enemy.waypoint]) < 0.01f)
             {
                 enemy.waypoint++;
-                if (enemy.waypoint > wave.path.Count)
+                if (enemy.waypoint >= wave.path.Count)
                     enemy.done = true;
             }
             else

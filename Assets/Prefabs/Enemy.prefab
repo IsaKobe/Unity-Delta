@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7228355367078515655}
   - component: {fileID: 6350810453667308247}
+  - component: {fileID: -1115999076824776642}
   - component: {fileID: 4660126018606562005}
   - component: {fileID: 2852048394474682136}
-  - component: {fileID: -1115999076824776642}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -94,6 +94,23 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &-1115999076824776642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792621576604648626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecb01c905a0ca304a90d5c0d6fbac3b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Enemies.MovingEnemy
+  score: 50
+  speed: 10
+  waypoint: 0
+  done: 0
+  wave: 0
 --- !u!60 &4660126018606562005
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -171,18 +188,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &-1115999076824776642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 792621576604648626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecb01c905a0ca304a90d5c0d6fbac3b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Enemies.MovingEnemy
-  speed: 0.2
-  currentWaypoint: 0
-  wave: 0

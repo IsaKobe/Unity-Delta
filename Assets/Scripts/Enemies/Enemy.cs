@@ -9,7 +9,8 @@ public class Enemy : MonoBehaviour, IDamagable
     public event Action<Enemy, bool> OnDeath;
 
     public float Health { get; set; }
-    public float Score { get; set; }
+    [SerializeField] float score;
+    public float Score { get => score; set => score = value; }
 
     void IDamagable.OnDeath()
     {
