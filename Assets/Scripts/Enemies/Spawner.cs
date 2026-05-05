@@ -23,6 +23,7 @@ public class Spawner : MonoBehaviour
             yield return new WaitForSeconds(waveData.initialDelay);
             for (int j = 0; j < waveData.enemyCount; j++)
             {
+                yield return new WaitForSeconds(waveData.delay);
                 enemyCounter++;
                 MovingEnemy enemy = Instantiate(
                     waveData.enemyPrefab,
@@ -32,7 +33,6 @@ public class Spawner : MonoBehaviour
                 enemy.OnDeath += OnEnemyDeath;
                 enemy.wave = i;
                 enemies.Add(enemy);
-                yield return new WaitForSeconds(waveData.delay);
             }
         }
         spawnerDone = true;
@@ -40,8 +40,9 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
-        foreach(MovingEnemy enemy in enemies)
+        for (int i = enemies.Count - 1; i >= 0; i--)
         {
+            MovingEnemy enemy = enemies[i];
             if (enemy.done)
                 continue;
 
@@ -55,7 +56,7 @@ public class Spawner : MonoBehaviour
             {
                 enemy.waypoint++;
                 if (enemy.waypoint >= wave.path.Count)
-                    enemy.done = true;
+                    enemy.DestroySelf();
             }
             else
                 enemy.transform.position = newPos;
@@ -70,9 +71,9 @@ public class Spawner : MonoBehaviour
         enemies.Remove(enemy as MovingEnemy);
         enemyCounter--;
 
-        if (spawnerDone && enemyCounter == 0)
+        if (spawnerDone && enemyCounter <= 0)
         {
-            ScoreManager.EndGame(true);
+             ScoreManager.EndGame(true);
         }
     }
 }

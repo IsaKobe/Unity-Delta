@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Assets.Scripts.Saves;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 using System;
 using System.Collections;
@@ -18,6 +19,7 @@ namespace Assets.Scripts
     {
         static ScoreManager instance;
 
+        [SerializeField] SaveControler controler;
         private void Awake()
         {
             if(instance != null)
@@ -55,74 +57,13 @@ namespace Assets.Scripts
 
         public static void EndGame(bool victory)
         {
-            instance.SaveData();
-
             instance.StartEndGame(victory);
         }
 
-        struct SaveD
-        {
-            public float score;
-            public override string ToString()
-            {
-                return $"score: {score}";
-            }
-        }
-
-        [ContextMenu("SaveData")]
-        void SaveData()
-        {
-            var jsonSerializer = JsonSerializer.Create();
-            string path = Path.Join(Application.persistentDataPath, "save.json");
-
-            SaveD data = new SaveD() { score = score };
-            StreamWriter writer = null;
-            JsonTextWriter jsonWriter = null;
-            try
-            {
-                writer = new StreamWriter(path);
-                jsonWriter = new(writer);
-                jsonSerializer.Serialize(jsonWriter, data);
-                jsonWriter.Close();
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
-                if (writer != null)
-                    writer.Dispose();
-                if (jsonWriter != null && jsonWriter.WriteState != WriteState.Closed)
-                    jsonWriter.Close();
-            }
-            Debug.Log(path);
-            Debug.Log(data);
-        }
-
-        [ContextMenu("LoadData")]
-        void LoadData()
-        {
-            var s = JsonSerializer.Create();
-            string path = Path.Join(Application.persistentDataPath, "save.json");
-            StreamReader reader = null;
-            JsonTextReader jsonReader = null;
-            try
-            {
-                reader = new StreamReader(path);
-                jsonReader = new(reader);
-
-                Debug.Log(s.Deserialize<SaveD>(jsonReader));
-                jsonReader.Close();
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
-                if (reader != null)
-                    reader.Dispose();
-            }
-            reader.Close();
-        }
 
         void StartEndGame(bool victory)
         {
+            controler.Save(new LevelSave() { score = score });
             StartCoroutine(LoadEnd(victory));
         }
 

@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour, IDamagable
         Destroy(gameObject);
     }
 
-    protected void DestroySelf() 
+    public void DestroySelf() 
     {
         OnDeath?.Invoke(this, false);
         Destroy(gameObject);
